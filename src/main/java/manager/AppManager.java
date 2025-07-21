@@ -3,6 +3,7 @@ package manager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
@@ -13,15 +14,17 @@ public class AppManager {
         return driver;
     }
 
-    @BeforeMethod
-    public void setup(){
-        driver = new ChromeDriver();
+    @BeforeMethod(alwaysRun = true)
+    public void setup() {
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("--headless");
+        driver = new ChromeDriver(chromeOptions);
         driver.manage().window().maximize();
     }
 
-    @AfterMethod
-    public void tearDown(){
-//        if(driver!= null)
-//            driver.quit();
+    @AfterMethod(alwaysRun = true)
+    public void tearDown() {
+        if (driver != null)
+            driver.quit();
     }
 }
